@@ -17,6 +17,8 @@ func New() Server{
 func (s Server) Run() error {
 	s.Use(middleware.Logger())
 
+	s.Static("/", "/static")
+
 	s.GET("/", handler.Home)
 	err := s.Start(":2020")
 	if err != nil {
