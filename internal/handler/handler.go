@@ -16,7 +16,7 @@ import (
 
 var jwtSecret = servies.GeterateJWTkey()
 func Home(c echo.Context) error{
-	return c.File("static/index.html")
+	return c.File("static/src/index.html")
 }
 func Register(c echo.Context) error {
 	db, err := gorm.Open(sqlite.Open("storage/main.db"))
