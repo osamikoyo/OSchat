@@ -68,3 +68,6 @@ func Login(c echo.Context) error {
 	return c.JSON(http.StatusOK, map[string]string{"token": tokenString})
 }
 
+func GetChats(c echo.Context) error {
+	var Chats []database.Chat
+}
