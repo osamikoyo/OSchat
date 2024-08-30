@@ -5,7 +5,7 @@ type User struct{
 	Password string `json:"password" form:"password"`
 	Email 	 string `json:"email" form:"email"`
 }
-type Chat struct{
+type ChatDB struct{
 	FirstUser string
 	SecondUser string
 	Data []Message
@@ -15,4 +15,8 @@ type Message struct{
 	FromUser string
 	ToUser string
 	Message string
+}
+type Chat struct{
+	LastMassage string
+	WithUser string
 }
