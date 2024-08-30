@@ -20,6 +20,18 @@ func FindChat(u User) ([]Chat, error){
     }
 	return Chats, nil
 }
+func FindMessages(fu User, su User) ([]Message, error){
+	var Message []Message
+
+	db, err := gorm.Open(sqlite.Open("storage/chats.db"))
+	logger := slog.New(slog.NewJSONHandler(os.Stdout, nil))
+	if err != nil {
+		logger.Error(err.Error())
+		return Message, err
+	}
+
+	
+} 
 type ChatDB struct{
 	FirstUser string
 	SecondUser string
