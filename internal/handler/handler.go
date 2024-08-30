@@ -16,7 +16,11 @@ import (
 
 var jwtSecret = servies.GeterateJWTkey()
 func Home(c echo.Context) error{
+<<<<<<< HEAD
 	return c.String(http.StatusOK, "server run")
+=======
+	return c.File("static/src/index.html")
+>>>>>>> c6599ea (chats and db correct)
 }
 func Register(c echo.Context) error {
 	db, err := gorm.Open(sqlite.Open("storage/main.db"))
@@ -69,5 +73,19 @@ func Login(c echo.Context) error {
 }
 
 func GetChats(c echo.Context) error {
+	loger := slog.New(slog.NewJSONHandler(os.Stdout, nil))
+
+
+	var User database.User
 	var Chats []database.Chat
+	err := c.Bind(&User)
+	if err != nil {
+		loger.Error(err.Error())
+		return nil
+	}
+	Chats, err = database.FindChat(User)
+	if err != nil {
+		loger.Error(err.Error())
+	}
+	return c.JSON(http.StatusOK, Chats)
 }
