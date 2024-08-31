@@ -4,10 +4,10 @@
 
 ## Code
 
-   `in static - logic for frontend  
+   in static - logic for frontend  
    
    in cmd - point of build and run   
-    application.`
+    application.
     Database - for saving message, chats and users.  
     
     Handler - for handler echo server.  
