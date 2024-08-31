@@ -4,7 +4,7 @@
 
 ## Code
 
-   ### in `static` - logic for frontend
-   ### in `cmd` - point of build and run 
-   ### application.
+   `in `static` - logic for frontend
+   in `cmd` - point of build and run 
+    application.`
   
