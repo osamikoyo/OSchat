@@ -3,7 +3,6 @@ package database
 import (
 	"log/slog"
 	"os"
-
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
@@ -29,12 +28,33 @@ func FindMessages(fu User, su User) ([]Message, error){
 		logger.Error(err.Error())
 		return Message, err
 	}
-	if err = db.Where("firstuser = ? OR seconduser = ? OR firstuser = ? OR seconduser = ?", fu.Username, fu.Username, su.Username, su.Username).Find(&Message).Error
+	if err = db.Where("(value = ? OR value2 = ?) AND (value = ? OR value2 = ?)", fu.Username, fu.Username, su.Username, su.Username).Find(&Message).Error
 	err != nil{
 		return Message, err
 	}
 	return Message, err
 	
+}
+var Msg []Message
+func FindMessageMore(fu User, su User, lastmessagedate string) ([]Message, error){
+	var Message []Message
+
+	loger := slog.New(slog.NewJSONHandler(os.Stdout, nil))
+
+	db, err := gorm.Open(sqlite.Open("storage"))
+	if err != nil {
+		loger.Error(err.Error())
+		return Message, err
+	}
+
+	if err = db.Where("(value = ? OR value2 = ?) AND (value = ? OR value2 = ?)", fu.Username, fu.Username, su.Username, su.Username).Find(&Message).Error
+	err != nil{
+		return Message, err
+	}
+	
+
+
+	return Message, nil
 } 
 type ChatDB struct{
 	FirstUser string
