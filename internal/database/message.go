@@ -29,7 +29,11 @@ func FindMessages(fu User, su User) ([]Message, error){
 		logger.Error(err.Error())
 		return Message, err
 	}
-
+	if err = db.Where("firstuser = ? OR seconduser = ? OR firstuser = ? OR seconduser = ?", fu.Username, fu.Username, su.Username, su.Username).Find(&Message).Error
+	err != nil{
+		return Message, err
+	}
+	return Message, err
 	
 } 
 type ChatDB struct{
