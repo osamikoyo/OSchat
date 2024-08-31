@@ -36,7 +36,7 @@ func FindMessages(fu User, su User) ([]Message, error){
 	
 }
 var Msg []Message
-func FindMessageMore(fu User, su User, lastmessagedate string) ([]Message, error){
+func FindMessageMore(fu User, su User, lastmessage Message) ([]Message, error){
 	var Message []Message
 
 	loger := slog.New(slog.NewJSONHandler(os.Stdout, nil))
@@ -52,22 +52,53 @@ func FindMessageMore(fu User, su User, lastmessagedate string) ([]Message, error
 		return Message, err
 	}
 	
-
+	Msg = TrimSlice(Message, lastmessage.Date)
 
 	return Message, nil
 } 
+func TrimSlice(slice []Message, threshold string) []Message {
+	var trimmed []Message
+	started := false
+
+	for _, item := range slice {
+		if item.Date== threshold {
+			started = true
+		}
+		if started {
+			trimmed = append(trimmed, item)
+		}
+	}
+
+	return trimmed
+}
+func AddMessage(msg Message) error{
+	db, err := gorm.Open(sqlite.Open("storage/chats.db"), &gorm.Config{})
+	loger := slog.New(slog.NewJSONHandler(os.Stdout, nil))
+	
+
+	if err != nil {
+		loger.Error(err.Error())
+		return err
+	}
+
+	res := db.Create(&msg)
+	if res.Error != nil {
+		loger.Error(res.Error.Error())
+	}
+	return err
+}
 type ChatDB struct{
-	FirstUser string
-	SecondUser string
-	Data []Message
+	FirstUser string  `json:"firstuser"`
+	SecondUser string `json:"seconduser"`
+	Data []Message    `json:"message"`
 }
 type Message struct{
-	FirstUser string
-	Message string
-	Date string
-	SendedUser string
+	FirstUser string  `json:"firstuser"`
+	Message string    `json:"datamsg"`
+	Date string	      `json:"date"`
+	SecondUser string `json:"seconduser"`
 }
 type Chat struct{
-	Firstuser string `json:"firstuser"`
+	Firstuser string  `json:"firstuser"`
 	Seconduser string `json:"seconduser"`
 }
