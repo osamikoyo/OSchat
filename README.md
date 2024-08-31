@@ -8,7 +8,7 @@
    
    in cmd - point of build and run   
     application.`
-    ###  Database - for saving message, chats and users.  
+    Database - for saving message, chats and users.  
     
     Handler - for handler echo server.  
     
