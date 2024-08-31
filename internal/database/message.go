@@ -25,7 +25,6 @@ func FindMessages(fu User, su User) ([]Message, error){
 
 	db, err := gorm.Open(sqlite.Open("storage/chats.db"))
 	logger := slog.New(slog.NewJSONHandler(os.Stdout, nil))
-	logger.Info("Message sended")
 	if err != nil {
 		logger.Error(err.Error())
 		return Message, err
