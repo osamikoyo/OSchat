@@ -16,11 +16,7 @@ import (
 
 var jwtSecret = servies.GeterateJWTkey()
 func Home(c echo.Context) error{
-<<<<<<< HEAD
-	return c.String(http.StatusOK, "server run")
-=======
 	return c.File("static/src/index.html")
->>>>>>> c6599ea (chats and db correct)
 }
 func Register(c echo.Context) error {
 	db, err := gorm.Open(sqlite.Open("storage/main.db"))
