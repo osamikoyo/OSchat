@@ -20,6 +20,10 @@ func (s Server) Run() error {
 	s.Static("/", "/static")
 
 	s.GET("/", handler.Home)
+
+	s.POST("/chats", handler.GetChats)
+	s.POST("/register", handler.Register)
+	s.POST("/login", handler.Login)
 	err := s.Start(":2020")
 	if err != nil {
 		return err
