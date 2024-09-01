@@ -53,7 +53,7 @@ func Login(c echo.Context) error {
 	if errs := db.Where("password = ?", us.Password).First(&u).Error; errs != nil {
 		return errs
 	}
-
+	loger.Info(u.Email, u.Password, nil)
 	if erre != nil || dbPassword != us.Password {
 		return echo.NewHTTPError(http.StatusUnauthorized, "Invalid credentials")
 	}
