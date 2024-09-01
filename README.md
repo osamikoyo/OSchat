@@ -18,4 +18,4 @@
     Servies - for other functions in project.  
 ## Database
      In this project using Sqlite, so i share db on two files  
-     For chats and main for users (storage)[https://github.com/osamikoyo/OSchat/tree/reg/storage]
+     For chats and main for users [Storage](https://github.com/osamikoyo/OSchat/tree/reg/storage)
