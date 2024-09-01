@@ -38,23 +38,29 @@ func Register(c echo.Context) error {
 	return nil
 }
 func Login(c echo.Context) error {
-	db, err := gorm.Open(sqlite.Open("storage/main.db"))
+	db, errd := gorm.Open(sqlite.Open("storage/main.db"))
+	if errd != nil {
+		return errd
+	}
+
 	loger := slog.New(slog.NewJSONHandler(os.Stdout, nil))
-	email := c.FormValue("email")
-	password := c.FormValue("password")
+	
+	var us database.User
+
+	erre := c.Bind(&us)
 
 	var dbPassword string
 	var u database.User
-	if err := db.Where("password = ?", password).First(&u).Error; err != nil {
-		return err
+	if errs := db.Where("password = ?", us.Password).First(&u).Error; errs != nil {
+		return errs
 	}
 
-	if err != nil || dbPassword != password {
+	if erre != nil || dbPassword != us.Password {
 		return echo.NewHTTPError(http.StatusUnauthorized, "Invalid credentials")
 	}
 
 	claims := jwt.MapClaims{}
-	claims["email"] = email
+	claims["email"] = us.Email
 	claims["exp"] = time.Now().Add(time.Hour * 1).Unix()
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
