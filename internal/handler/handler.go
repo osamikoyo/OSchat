@@ -95,3 +95,19 @@ func GetChats(c echo.Context) error {
 	}
 	return c.JSON(http.StatusOK, Chats)
 }
+func GetMessage(c echo.Context) error {
+	loger := slog.New(slog.NewJSONHandler(os.Stdout, nil))
+
+	var Users []database.User
+	err := c.Bind(&Users)
+	if err != nil {
+		loger.Error(err.Error())
+		return err
+	}
+	messages, errs := database.FindMessages(Users[0], Users[1])
+	if errs != nil {
+		loger.Error(errs.Error())
+		return errs
+	}
+	return c.JSON(http.StatusOK, messages)
+}
