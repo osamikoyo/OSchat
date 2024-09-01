@@ -43,18 +43,22 @@ func Login(c echo.Context) error {
 	}
 
 	loger := slog.New(slog.NewJSONHandler(os.Stdout, nil))
-	
+	var u1 database.User
 	var us database.User
 
 	erre := c.Bind(&us)
 
-	var dbPassword string
-	var u database.User
-	if errs := db.Where("password = ?", us.Password).First(&u).Error; errs != nil {
+
+	if erru := db.Where("email = ?", us.Email).First(&u1).Error; erru != nil {
+		return erru
+	}
+
+	var u2 database.User
+	if errs := db.Where("password = ? OR email = ?", us.Password, us.Email).First(&u2).Error; errs != nil {
 		return errs
 	}
-	loger.Info(u.Email, u.Password, nil)
-	if erre != nil || dbPassword != us.Password {
+	loger.Info(u2.Email, u2.Password, nil)
+	if erre != nil || u1.Password != us.Password {
 		return echo.NewHTTPError(http.StatusUnauthorized, "Invalid credentials")
 	}
 
