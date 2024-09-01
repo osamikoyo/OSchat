@@ -24,7 +24,7 @@ func (s Server) Run() error {
 	s.POST("/chats", handler.GetChats)
 	s.POST("/register", handler.Register)
 	s.POST("/login", handler.Login)
-	s.POST("/message", handler.Getmessage)
+	s.POST("/message", handler.GetMessage)
 	err := s.Start(":2020")
 	if err != nil {
 		return err
