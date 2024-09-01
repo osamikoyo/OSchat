@@ -5,7 +5,6 @@ import (
 	"net/http"
 	"os"
 	"oschat/internal/database"
-	"oschat/internal/servies"
 	"time"
 	"github.com/golang-jwt/jwt"
 	"github.com/labstack/echo/v4"
@@ -13,7 +12,7 @@ import (
 	"gorm.io/gorm"
 )
 
-var jwtSecret = servies.GeterateJWTkey()
+var jwtSecret = "vsfvskfffdv3r3k2l"
 func Home(c echo.Context) error{
 	return c.File("static/index.html")
 }
