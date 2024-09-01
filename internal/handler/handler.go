@@ -7,7 +7,6 @@ import (
 	"oschat/internal/database"
 	"oschat/internal/servies"
 	"time"
-
 	"github.com/golang-jwt/jwt"
 	"github.com/labstack/echo/v4"
 	"gorm.io/driver/sqlite"
